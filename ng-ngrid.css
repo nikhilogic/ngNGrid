@@ -1,0 +1,5 @@
+.ngngrid-scroll {    
+    overflow-y: auto;
+    position:absolute;
+    width: 100%;
+}
