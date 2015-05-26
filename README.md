@@ -1,6 +1,8 @@
 # ngNGrid
 
 This is an extensible grid control built in angular js.
+
+
 Salient Features:
  - Allows to create different types of column data (button, label, custom format...)
  - Sorting capability
