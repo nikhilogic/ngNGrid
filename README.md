@@ -15,6 +15,7 @@ Salient Features:
  
  
 Dependencies:
+
  AngularJs BootStrap 0.13.0  https://angular-ui.github.io/bootstrap/ 
 
  AngularJs 1.3.15 https://angularjs.org/
