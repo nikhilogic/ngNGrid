@@ -1,19 +1,19 @@
-/* 
+﻿/* 
 
 TODO: format this later
-    columnDefinitions: '=',
+     columnDefinitions: '=',
             childColumndefinitions: '=',
             childPropertyname: '@',
             rowFooterdefinitions: '=',
             rows: '=',
-            rowsLoading: '=',                        
-            rowsLoadingText: '@',                        
-            bottomElementids: '=',
+            rowsLoading: '=',
+            rowsLoadingText: '@',            
             gridSortColumn: '=initialSortcolumn',
             gridSortOrder: '=initialSortdesc',
-            gridFilters: '='
-            showRownumbers: '='
-            gridHeight: '='
+            gridFilters: '=',
+            showRownumbers: '=',
+            gridHeightFixed: '=',
+            gridHeightStretchBottomOffset: '='
 
 
  Documentation for Column Definitions
@@ -34,7 +34,7 @@ TODO: format this later
         TextFn: function(r) {return "ASD";},   
         ClassFn: function (r) { return 'btn-default'; },
         GlyphFn: function (r) { return 'glyphicon-comment'; },
-        TooltipFn: function (r) { return 'Click to open/add comments'; },
+        TooltipFn: function (r) { return 'Click to open/add comments'; },        
         BadgeFn : function(r) {return '1';}
         DisableFn: function(r) {return 'asd';},
         ClickFn: $scope.onCommentsClicked                   
@@ -55,18 +55,26 @@ angular.module('ngNgrid', [])
 
         scope.pageSizeOptions = [10, 20, 50, 100, 500, 1000];
         scope.gridCurrentPage = 1;
-        scope.gridPageSize = 50;        
+        scope.gridPageSize = 50;
         scope.gridChildrenSortOrder = false;
         scope.gridChildrenSortColumn = '';
-        scope.customFilter = [];        
-        scope.customFilter.ColumnFilters = [];        
-        scope.filterSelectionList = [];     
-        
+        scope.customFilter = [];
+        scope.customFilter.ColumnFilters = [];
+        scope.filterSelectionList = [];
 
-        scope.setGridTableStyle = function () {            
+
+        scope.setGridTableStyle = function () {
             var topPosition = document.getElementById('ngGridToolbar').getBoundingClientRect().bottom;
-            var bottomPosition = window.innerHeight - scope.gridHeight - document.getElementById('ngGridToolbar').getBoundingClientRect().top;            
-            return { top: topPosition + 'px', bottom: bottomPosition + 'px' };            
+            var bottomPosition = 0;
+            if (scope.gridHeightStretchBottomOffset != null) {
+                bottomPosition = scope.gridHeightStretchBottomOffset;
+            }
+            else {
+                bottomPosition = window.innerHeight - scope.gridHeightFixed - document.getElementById('ngGridToolbar').getBoundingClientRect().top;
+            }
+
+
+            return { top: topPosition + 'px', bottom: bottomPosition + 'px' };
         };
 
 
@@ -76,8 +84,8 @@ angular.module('ngNgrid', [])
 
         scope.canShowGroup = function () {
             return true;
-        }       
-        
+        }
+
         scope.changeSort = function (sortCol) {
             scope.gridSortOrder = !scope.gridSortOrder;
             scope.gridSortColumn = scope.getSortProperty(sortCol);
@@ -98,20 +106,20 @@ angular.module('ngNgrid', [])
 
         scope.getSortProperty = function (col) {
             var colName = null;
-            if (col.OverrideSortProperty != null) {
-                colName = col.Name + '.' + col.OverrideSortProperty;
+            if (col.SortProperty != null) {
+                colName = col.Name + '.' + col.SortProperty;
             }
             else {
                 colName = col.Name;
             }
             return colName;
         }
-        
+
         scope.getColValue = function (col, row) {
             var val = null;
             if (row[col.Name] != null) {
-                if (col.OverrideSortProperty != null) {
-                    val = row[col.Name][col.OverrideSortProperty];
+                if (col.SortProperty != null) {
+                    val = row[col.Name][col.SortProperty];
                 }
                 else {
                     val = row[col.Name];
@@ -140,8 +148,8 @@ angular.module('ngNgrid', [])
             var colName = scope.getSortProperty(col);
             for (i = 0, len = scope.rows.length ; i < len; i++) {
                 var colValue = scope.getColValue(col, scope.rows[i]);
-                if (colValue != null) {                    
-                    if (distinctValues.indexOf(colValue) == -1) {                        
+                if (colValue != null) {
+                    if (distinctValues.indexOf(colValue) == -1) {
                         distinctValues.push(colValue);
                     }
                 }
@@ -154,7 +162,7 @@ angular.module('ngNgrid', [])
 
             var colName = scope.getSortProperty(col);
             var filteredList = [];
-            var filteredRows = scope.gridFilteredRows; 
+            var filteredRows = scope.gridFilteredRows;
 
             if (filteredRows.length == scope.rows.length || (scope.customFilter.ColumnFilters[colName] != null && scope.customFilter.ColumnFilters[colName].IsFirstFilter)) {
                 filteredList = scope.distinctColValues(col);
@@ -179,7 +187,7 @@ angular.module('ngNgrid', [])
             return filteredList;
         }
 
-        scope.clearColFilters = function (colName) {            
+        scope.clearColFilters = function (colName) {
             delete scope.customFilter.ColumnFilters[colName];
         }
 
@@ -224,7 +232,7 @@ angular.module('ngNgrid', [])
                         logDebug('removing filter ' + filterString);
                         //item exists toggle - remove it
                         scope.customFilter.ColumnFilters[colName].splice(posFilter, 1);
-                        if (scope.customFilter.ColumnFilters[colName].length == 0) {                            
+                        if (scope.customFilter.ColumnFilters[colName].length == 0) {
                             delete scope.customFilter.ColumnFilters[colName];
                             //set the first filter to the next immediate column
                             for (var cFilter in scope.customFilter.ColumnFilters) {
@@ -257,7 +265,7 @@ angular.module('ngNgrid', [])
         }
 
         scope.isColNameFilterApplied = function (colName) {
-            return (scope.customFilter.ColumnFilters[colName] != null);            
+            return (scope.customFilter.ColumnFilters[colName] != null);
         }
 
         scope.isColFiltered = function (col, filterString) {
@@ -274,14 +282,14 @@ angular.module('ngNgrid', [])
             }
         }
 
-        scope.clearAllFilters = function () {            
-            scope.customFilter.ColumnFilters = [];         
+        scope.clearAllFilters = function () {
+            scope.customFilter.ColumnFilters = [];
         }
 
         scope.anyFiltersExist = function () {
             if (scope.customFilter.ColumnFilters == null || scope.customFilter.ColumnFilters == [] || Object.keys(scope.customFilter.ColumnFilters) <= 0) return false;
 
-            for (var prop in scope.customFilter.ColumnFilters) {                
+            for (var prop in scope.customFilter.ColumnFilters) {
                 if (scope.customFilter.ColumnFilters[prop] != null) return true;
             }
             return false;
@@ -294,14 +302,29 @@ angular.module('ngNgrid', [])
                     var gFilter = scope.gridFilters[i];
                     scope.addColumnFilter(gFilter.Column, gFilter.FilterString, true);
                 }
-            }            
+            }
         });
 
         scope.getStyle = function () {
-            return { height: scope.gridHeight + 'px', width: 100 + '%' };
+
+            if (scope.gridHeightStretchBottomOffset != null) {
+                //stretch to window
+                var newHeight = window.innerHeight - document.getElementById('ngGridToolbar').getBoundingClientRect().top - scope.gridHeightStretchBottomOffset;
+                logDebug('newheight ' + newHeight);
+                return { height: newHeight + 'px', width: 100 + '%' };
+            }
+            else {
+                logDebug('fixed height ' + scope.gridHeightFixed);
+                return { height: scope.gridHeightFixed + 'px', width: 100 + '%' };
+            }
+
         }
-    }   
-    
+
+        scope.footerColumnSpan = function () {
+            return Math.max(scope.columnDefinitions.length, scope.childColumndefinitions.length);
+        }
+    }
+
     return {
         restrict: 'E',
         scope: {
@@ -312,12 +335,12 @@ angular.module('ngNgrid', [])
             rows: '=',
             rowsLoading: '=',
             rowsLoadingText: '@',
-            bottomElementids: '=',
             gridSortColumn: '=initialSortcolumn',
             gridSortOrder: '=initialSortdesc',
             gridFilters: '=',
             showRownumbers: '=',
-            gridHeight: '='
+            gridHeightFixed: '=',
+            gridHeightStretchBottomOffset: '='
         },
         templateUrl: 'Templates/NgNgridTemplate.html',
         link: link
@@ -326,9 +349,9 @@ angular.module('ngNgrid', [])
 
 .filter('ngNgridFilter', function ($filter) {
     return function (rows, customFilter) {
-        
+
         var filteredRows = rows;
-        if (customFilter != null && customFilter.ColumnFilters != null ) {
+        if (customFilter != null && customFilter.ColumnFilters != null) {
             if (Object.keys(customFilter.ColumnFilters).length > 0) {
                 var tempFilteredRows = [];
                 for (var i = 0; i < filteredRows.length; i++) {

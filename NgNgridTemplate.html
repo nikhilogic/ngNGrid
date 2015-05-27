@@ -1,10 +1,15 @@
-<div ng-style="getStyle()">
+﻿<div ng-style="getStyle()">
     <nav id="ngGridToolbar" class="navbar-form navbar-default navbar-static-top" role="navigation">
         <div class="container-fluid">
-            <div class="navbar-right">
+            <div class="navbar-left">
                 <div class="btn-group">
-                    <button class="btn btn-default" ng-click="clearAllFilters()" ng-disabled="!anyFiltersExist()" data-toggle="tooltip" data-placement="right" title="Clear All Filters">Clear all filters<span class="glyphicon glyphicon-filter"></span> </button>
+                    <button class="btn btn-default" btn-checkbox ng-model="showRownumbers" data-toggle="tooltip" data-placement="right" title="Show/Hide Row Numbers"><span class="glyphicon" ng-class="showRownumbers?'glyphicon-check':'glyphicon-unchecked'"></span> Show Row #</button>
                 </div>
+                <div class="btn-group">
+                    <button class="btn btn-default" ng-click="clearAllFilters()" ng-disabled="!anyFiltersExist()" data-toggle="tooltip" data-placement="right" title="Clear All Filters"><span class="glyphicon glyphicon-filter"></span> Clear all filters</button>
+                </div>                
+            </div>
+            <div class="navbar-right">
                 <div class="btn-group">
                     <label class="btn" onmouseover="" style="cursor:default"><b>{{gridCurrentPage}}-{{gridTotalPages()}}</b> of <b>{{rows.length}}</b></label>
                     <div>
@@ -20,13 +25,14 @@
             </div>
         </div>
     </nav>
+
     <div id="ngGridTable" class="ngngrid-scroll" ng-style="setGridTableStyle()">
         <table class="table table-condensed table-bordered table-striped">
 
             <tr>
-                <th ng-if="showRownumbers">#</th>
+                <th ng-show="showRownumbers">#</th>
                 <th ng-repeat="c in columnDefinitions">
-                    <span ng-click="changesort(c)" style="cursor:pointer">
+                    <span ng-click="changeSort(c)" style="cursor:pointer">
                         <u>
                             {{c.DisplayName}}
                         </u>
@@ -35,7 +41,7 @@
                 </th>
             </tr>
             <tr>
-                <th ng-if="showRownumbers"></thng-if>
+                <th ng-show="showRownumbers"></thng-if>
                 <th ng-repeat="c in columnDefinitions">
                     <div ng-hide="c.DisableFilter" class="input-group input-group-sm">
                         <input type="text" class="form-control" ng-model="c.ColHeaderFilter" typeahead-on-select="addColumnFilter(c,c.ColHeaderFilter,false)" typeahead="v for v in distinctColValues(c) | filter:$viewValue | limitTo:8" />
@@ -49,7 +55,6 @@
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
                                         <input type="text" class="form-control" ng-model="dropDownFilter" ng-click="$event.stopPropagation();$event.preventDefault()" />
                                     </span>
-
                                 </li>
                                 <li class="divider"></li>
                                 <li>
@@ -60,24 +65,21 @@
                                         </button>
                                         <span>Select/Unselect All</span>
                                     </span>
-
                                 </li>
                                 <li class="divider"></li>
                                 <li ng-repeat="distinctVal in (c.DropdownFilteredValues = (distinctColValuesFiltered(c) | filter:dropDownFilter:false)) | orderBy:false">
-                                    <label ng-switch="c.Type">
+                                    <div ng-switch="c.Type" style="font-weight:normal">
                                         &nbsp;
-                                        <label type="button" class="btn btn-default btn-xs" ng-click="c.ColHeaderFilter='';addColumnFilter(c,distinctVal,true);$event.stopPropagation()">
+                                        <label style="font-weight:normal" type="button" class="btn btn-default btn-xs" ng-click="c.ColHeaderFilter='';addColumnFilter(c,distinctVal,true);$event.stopPropagation()">
                                             <span class="glyphicon" ng-class="isColFiltered(c,distinctVal)?'glyphicon-check':'glyphicon-unchecked'" style="cursor: pointer"></span>
                                         </label>
-
-                                        <label ng-switch-when="Label" class="label" ng-class="c.FilterClassFn(distinctVal)">
+                                        <label style="font-weight:normal" ng-switch-when="Label" class="label" ng-class="c.FilterClassFn(distinctVal)">
                                             <span class="glyphicon" ng-class="c.FilterGlyphFn(distinctVal)"></span>
-
                                             {{c.FilterTextFn ? c.FilterTextFn(distinctVal):distinctVal}}
                                         </label>
-                                        <label ng-switch-default>{{distinctVal}}</label>
+                                        <label style="font-weight:normal" ng-switch-default>{{distinctVal}}</label>
                                         &nbsp;
-                                    </label>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -85,7 +87,7 @@
                 </th>
             </tr>
             <tr ng-repeat-start="row in (gridFilteredRows =  (rows | orderBy:gridSortColumn:gridSortOrder | ngNgridFilter:customFilter)) | ngNgridPageOffset: (gridCurrentPage-1)*gridPageSize  | limitTo:gridPageSize" style="border-bottom: none" ng-class="{'animate':row.isUpdated}">
-                <td ng-if="showRownumbers">{{$index+1}}</td>
+                <td ng-show="showRownumbers">{{$index+1}}</td>
                 <td ng-repeat="c in columnDefinitions">
                     <span ng-switch="c.Type">
                         <span ng-switch-when="Label">
@@ -93,11 +95,12 @@
                                 <span class="glyphicon {{c.GlyphFn(row)}}"></span>
                                 {{c.TextFn(row)}}
                             </span>
+                            <span ng-show="c.BadgeFn" class="badge">{{c.BadgeFn(row)}}</span>
                         </span>
                         <span ng-switch-when="Button">
                             <span ng-disabled="c.DisableFn(row)" class="btn  btn-xs  {{c.ClassFn(row)}}" data-toggle="tooltip" data-placement="right" title="{{c.TooltipFn(row)}}" ng-click="c.ClickFn(row)">
                                 <span class="glyphicon  {{c.GlyphFn(row)}}"></span>
-                                <span ng-hide="c.DisableBadge" class="badge">{{c.BadgeFn(row)}}</span>
+                                <span ng-show="c.BadgeFn" class="badge">{{c.BadgeFn(row)}}</span>
                                 {{c.TextFn(row)}}
                             </span>
                         </span>
@@ -108,6 +111,12 @@
                             <select name="status" class="form-control" ng-model="row[c.Name]" ng-options="o[SelectValue]  for o in  c.SelectFunction(row)  track by o[SelectKey]" ng-change="row.isDirty=true" required>
                                 <option value="">Select</option>
                             </select>
+                        </span>
+                        <span ng-switch-when="Link">
+                            <a href="{{c.UrlFn(row)}}" target="_blank">
+                                {{c.TextFn ?  c.TextFn(row) :  row[c.Name]}}
+                                <span ng-show="c.BadgeFn" class="badge">{{c.BadgeFn(row)}}</span>
+                            </a>
                         </span>
                         <span ng-switch-default>
                             <span ng-if="$index ==0 && row.isDirty" class='glyphicon glyphicon-edit'></span>
@@ -143,9 +152,9 @@
                                         </span>
                                     </span>
                                     <span ng-switch-when="Button">
-                                        <span class="btn  btn-xs {{childCol.ClassFn(childRow)}}" data-toggle="tooltip" data-placement="right" title="{{childCol.TooltipFn(childRow)}}" ng-click="childCol.ButtonClick(childRow)" ng-disabled="childCol.DisableFn(childRow)">
+                                        <span class="btn  btn-xs {{childCol.ClassFn(childRow)}}" data-toggle="tooltip" data-placement="right" title="{{childCol.TooltipFn(childRow)}}" ng-click="childCol.ClickFn(childRow)" ng-disabled="childCol.DisableFn(childRow)">
                                             <span class="glyphicon {{childCol.GlyphFn(childRow)}}"></span>
-                                            <span ng-show="childCol.ShowBadgeCount" class="badge">{{childRow[childCol.Name].length}}</span>
+                                            <span ng-show="childCol.BadgeFn" class="badge">{{childCol.BadgeFn(childRow)}}</span>
                                             {{childCol.TextFn(childRow)}}
                                         </span>
                                     </span>
@@ -157,12 +166,10 @@
                                             <option value="">Select</option>
                                         </select>
                                     </span>
-                                    <span ng-switch-when="Custom">
-                                        {{childCol.TextFn(childRow)}}
-                                    </span>
                                     <span ng-switch-default>
                                         <span ng-if="$index ==0 && childRow.isDirty" class='glyphicon glyphicon-edit'></span>
-                                        <span>{{getColValue(childCol,childRow)}}</span>
+                                        <!--<span>{{getColValue(childCol,childRow)}}</span>-->
+                                        <span>{{childCol.TextFn ?  childCol.TextFn(childRow) :  childRow[childCol.Name]}}</span>
                                     </span>
                                 </span>
 
@@ -170,15 +177,24 @@
                         </tr>
                         <tfoot>
                             <tr>
-                                <td colspan="{{childColumndefinitions.length}}">
+                                <td colspan="{{footerColumnSpan()}}">
                                     <span ng-repeat="rowFooter in rowFooterdefinitions">
                                         <span ng-switch="rowFooter.Type">
                                             <span ng-switch-when="Button">
                                                 <span class="btn-group">
-                                                    <span class="btn {{rowFooter.ClassFn(row)}}" data-toggle="tooltip" data-placement="right" title="{{rowFooter.TooltipFn(row)}}" ng-click="childCol.ButtonClick(row)" ng-disabled="rowFooter.DisableFn">
+                                                    <span class="btn {{rowFooter.ClassFn(row)}}" data-toggle="tooltip" data-placement="right" title="{{rowFooter.TooltipFn(row)}}" ng-click="childCol.ClickFn(row)" ng-disabled="rowFooter.DisableFn(row)">
                                                         <span class="glyphicon {{rowFooter.GlyphFn(row)}}"></span>
                                                     </span>
                                                 </span>
+                                            </span>
+                                            <span ng-switch-when="Label">
+                                                <span class="label label-xs {{rowFooter.ClassFn(row)}}" data-toggle="tooltip" data-placement="right" title="{{rowFooter.TooltipFn(row)}}">
+                                                    <span class="glyphicon {{rowFooter.GlyphFn(row)}}"></span>
+                                                    {{rowFooter.TextFn(row)}}
+                                                </span>
+                                            </span>
+                                            <span ng-default-default>
+                                                {{rowFooter.TextFn(row)}}
                                             </span>
                                         </span>
                                     </span>
