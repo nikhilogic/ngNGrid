@@ -14,4 +14,10 @@ Salient Features:
  more to come...
  
  
- 
+Dependencies:
+ AngularJs BootStrap 0.13.0  https://angular-ui.github.io/bootstrap/ 
+ AngularJs 1.3.15 https://angularjs.org/
+ Bootstrap 3.3.4 https://github.com/twbs/bootstrap
+ JQuery 1.10.2 http://jquery.com/
+
+
