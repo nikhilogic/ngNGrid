@@ -22,7 +22,6 @@ Dependencies:
  
  Bootstrap 3.3.4 https://github.com/twbs/bootstrap
  
- JQuery 1.10.2 http://jquery.com/
  
 
 
