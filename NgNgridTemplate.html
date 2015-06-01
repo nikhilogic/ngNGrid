@@ -6,7 +6,7 @@
                     <button class="btn btn-default" btn-checkbox ng-model="showRowNumbers" data-toggle="tooltip" data-placement="right" title="Show/Hide Row Numbers"><span class="glyphicon" ng-class="showRowNumbers?'glyphicon-check':'glyphicon-unchecked'"></span> Row #</button>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-default" btn-checkbox ng-model="showRowSelector" data-toggle="tooltip" data-placement="right" title="Show/Hide Row Selector"><span class="glyphicon" ng-class="showRowSelector?'glyphicon-check':'glyphicon-unchecked'"></span>Row Selection</button>
+                    <button class="btn btn-default" btn-checkbox ng-model="showRowSelector" data-toggle="tooltip" data-placement="right" title="Show/Hide Row Selector"><span class="glyphicon" ng-class="showRowSelector?'glyphicon-check':'glyphicon-unchecked'"></span> Row Selection</button>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-default" ng-click="clearAllFilters()" ng-disabled="!anyFiltersExist()" data-toggle="tooltip" data-placement="right" title="Clear All Filters"><span class="glyphicon glyphicon-filter"></span> Clear all filters</button>
@@ -49,8 +49,8 @@
                     <div ng-hide="c.DisableFilter" class="input-group input-group-sm">
                         <input type="text" class="form-control" ng-model="c.ColHeaderFilter" typeahead-on-select="addColumnFilter(c,c.ColHeaderFilter,false);col.ColHeaderFilter = ''" typeahead="v for v in distinctColValues(c) | filter:$viewValue | limitTo:8" />
                         <div class="input-group-btn" dropdown>
-                            <button dropdown-toggle class="btn dropdown-toggle" ng-class="isColFilterApplied(c) ? 'btn-primary':'btn-default'">
-                                <span class="glyphicon glyphicon-filter"></span>
+                            <button dropdown-toggle class="btn dropdown-toggle" ng-class="isColFilterApplied(c) ? 'btn-primary':'btn-default'" >
+                                <span class="glyphicon glyphicon-filter"></span>                                
                             </button>
                             <ul class="dropdown-menu" ng-class="{'dropdown-menu-right': $index == columnDefinitions.length-1}" role="menu" style="overflow-y:auto;height:300px;width:auto">
                                 <li>
@@ -63,35 +63,31 @@
                                 <li>
                                     <span class="input-group input-group-sm">
                                         &nbsp;
-                                        <button type="button" btn-checkbox ng-model="isColDropdownChecked" class="btn btn-default btn-xs" ng-click="toggleColFilters(c);$event.stopPropagation()" data-toggle="tooltip" data-placement="right" title="{{isColDropdownChecked?'Clear all':'Select all'}}">
-                                            <span class="glyphicon" ng-class="isColFilterApplied(c)?'glyphicon-check':'glyphicon-unchecked'"></span>
-                                        </button>
+                                        <span class="glyphicon" ng-class="isColFilterApplied(c)?'glyphicon-check':'glyphicon-unchecked'" style="cursor: pointer" ng-click="toggleColFilters(c);$event.stopPropagation()"></span>
                                         <span>Select/Unselect All</span>
                                     </span>
                                 </li>
                                 <li class="divider"></li>
                                 <li ng-repeat="distinctVal in (c.DropdownFilteredValues = (distinctColValuesFiltered(c) | filter:dropDownFilter:false)) | orderBy:false">
-                                    <div ng-switch="c.Type" style="font-weight:normal">
+                                    <div >
                                         &nbsp;
-                                        <label style="font-weight:normal" type="button" class="btn btn-default btn-xs" ng-click="c.ColHeaderFilter='';addColumnFilter(c,distinctVal,true);$event.stopPropagation()">
-                                            <span class="glyphicon" ng-class="isColFiltered(c,distinctVal)?'glyphicon-check':'glyphicon-unchecked'" style="cursor: pointer"></span>
-                                        </label>
-                                        <label style="font-weight:normal" ng-switch-when="Label" class="label" ng-class="c.FilterClassFn(distinctVal)">
-                                            <span class="glyphicon" ng-class="c.FilterGlyphFn(distinctVal)"></span>
-                                            {{c.FilterTextFn ? c.FilterTextFn(distinctVal):distinctVal}}
-                                        </label>
-                                        <label style="font-weight:normal" ng-switch-default>{{distinctVal}}</label>
+                                        <span class="glyphicon" ng-class="isColFiltered(c,distinctVal)?'glyphicon-check':'glyphicon-unchecked'" ng-click="c.ColHeaderFilter='';addColumnFilter(c,distinctVal,true);$event.stopPropagation()" style="cursor: pointer"></span>
+                                        <span ng-switch="c.Type">
+                                            <label ng-switch-when="Label" style="font-weight:normal" class="label" ng-class="c.FilterClassFn(distinctVal)">                                                
+                                                <span class="glyphicon" ng-class="c.FilterGlyphFn(distinctVal)"></span>
+                                                {{c.FilterTextFn ? c.FilterTextFn(distinctVal):distinctVal}}
+                                            </label>
+                                            <small ng-switch-default style="font-weight:normal">{{distinctVal}}</small>
+                                        </span>
                                         &nbsp;
                                     </div>
-                                </li>
+                                </li>                                
                             </ul>
                         </div>
                     </div>
                 </th>
-            </tr>
-            <!--<tr ng-repeat-start="row in (gridFilteredRows =  (rows | orderBy:gridSortColumn:gridSortOrder | filter:canShowRecord)) | ngNgridPageOffset: (gridCurrentPage-1)*gridPageSize  | limitTo:gridPageSize" style="border-bottom: none" ng-class="{'animate':row.isNgngridUpdated}">-->
-            <!--<tr ng-repeat-start="row in (gridFilteredRows =  (rows | orderBy:gridSortColumn:gridSortOrder | ngNgridFilter:customFilter)) | ngNgridPageOffset: (gridCurrentPage-1)*gridPageSize  | limitTo:gridPageSize" style="border-bottom: none" ng-class="{'animate':row.isNgngridUpdated}">-->
-            <tr ng-repeat-start="row in (gridFilteredRows =  (rows | orderBy:gridSortColumn:gridSortOrder | filter:canShowRecord)) | ngNgridPageOffset: (gridCurrentPage-1)*gridPageSize  | limitTo:gridPageSize" style="border-bottom: none" ng-class="{'animate':row.isNgngridUpdated,'info':row.isNgngridSelected}" >
+            </tr>            
+            <tr ng-repeat-start="row in (gridFilteredRows =  (rows | orderBy:gridSortColumn:gridSortOrder | filter:canShowRecord)) | ngNgridPageOffset: (gridCurrentPage-1)*gridPageSize  | limitTo:gridPageSize" style="border-bottom: none" ng-class="{'ngngrid-animaterow':row.isNgngridUpdated,'info':row.isNgngridSelected,'warning':row.isNgngridDirty}">
                 <td ng-show="showRowNumbers">{{$index+1}}</td>
                 <th ng-show="showRowSelector" ng-click="row.isNgngridSelected = !row.isNgngridSelected" style="cursor:pointer"><span class="glyphicon" ng-class="row.isNgngridSelected ?  'glyphicon-check': 'glyphicon-unchecked'"></span></button></th>
                 <td ng-repeat="c in columnDefinitions">
@@ -118,23 +114,29 @@
                             </span>
                         </span>
                         <span ng-switch-when="Select">
-                            <select name="status" class="form-control" ng-model="row[c.Name]" ng-options="o[SelectValue]  for o in  c.SelectFunction(row)  track by o[SelectKey]" ng-change="row.isNgngridDirty=true" required>
+                            <select class="form-control" ng-model="row[c.Name]" ng-options="o[c.SelectValue]  for o in  c.SelectFn(row)  track by o[c.SelectKey]" ng-change="row.isNgngridDirty=true" required>
                                 <option value="">Select</option>
                             </select>
                         </span>
                         <span ng-switch-when="Link">
-                            <a href="{{c.UrlFn(row)}}" target="_blank">
+                            <a href="{{c.UrlFn(row)}}" target="_blank" ng-class="c.ClassFn(row)">
                                 {{c.TextFn ?  c.TextFn(row) :  row[c.Name]}}
                                 <span class="glyphicon  {{c.GlyphFn(row)}}">
                                 </span>
                                 <span ng-show="c.BadgeFn" class="badge" ng-class="c.BadgeClass">{{c.BadgeFn(row)}}</span>
                             </a>
                         </span>
-                        <span ng-switch-when="Input">
-                            
-                                <!--<span class="input-group-addon"><span class="glyphicon {{c.GlyphFn(row)}}"></span>{{c.TextFn(row)}}</span>-->
-                                <input class="form-control" ng-model="row[c.Name]" ng-readonly="c.DisabledFn(row)" />
-                            
+                        <span ng-switch-when="Input">                           
+                            <span ng-hide="inputEditing" class="{{c.ClassFn(row)}}" data-toggle="tooltip" data-placement="right" title="{{c.TooltipFn(row)}}" ng-click="inputEditing = true">
+                                <span class="glyphicon {{c.GlyphFn(row)}}"></span>
+                                {{row[c.Name]}}
+                                <span ng-show="c.BadgeFn" class="badge" ng-class="c.BadgeClass">{{c.BadgeFn(row)}}</span>
+                            </span>
+                            <span class="input-group input-group-sm" ng-show="inputEditing">
+                                <input class="form-control" ng-model="row[c.Name]" ng-readonly="c.DisabledFn(row)" ng-blur="inputEditing =false" />
+                            </span>
+
+
                         </span>
                         <span ng-switch-default>
                             <span ng-show="$index ==0 && row.isNgngridDirty" class='glyphicon glyphicon-edit'></span>
@@ -208,7 +210,6 @@
                                     </span>
                                     <span ng-switch-default>
                                         <span ng-if="$index ==0 && childRow.isNgngridDirty" class='glyphicon glyphicon-edit'></span>
-                                        <!--<span>{{getColValue(childCol,childRow)}}</span>-->
                                         <span>{{childCol.TextFn ?  childCol.TextFn(childRow) :  childRow[childCol.Name]}}</span>
                                     </span>
                                 </span>
