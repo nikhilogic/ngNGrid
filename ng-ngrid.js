@@ -3,7 +3,7 @@
 TODO: format this later
      columnDefinitions: '=',
             childColumndefinitions: '=',
-            childPropertyname: '@',
+            childPropertynames: '@',
             rowFooterdefinitions: '=',
             rows: '=',
             rowsLoading: '=',
@@ -49,7 +49,7 @@ TODO: format this later
 
 
 angular.module('ngNgrid', [])
-.directive('ngNgrid', function ($filter, $window) {
+.directive('ngNgrid', function ($filter, $window, $timeout) {
 
     function link(scope, element, attrs) {
         scope.pageSizeOptions = [10, 20, 50, 100, 500, 1000];
@@ -95,7 +95,7 @@ angular.module('ngNgrid', [])
             scope.gridChildrenSortColumn = scope.getSortProperty(sortCol);
         }
 
-        scope.isGridChildSorted = function (sortCol) {
+        scope.isChildSorted = function (sortCol) {
             return (scope.gridChildrenSortColumn == scope.getSortProperty(sortCol));
         }
 
@@ -110,11 +110,43 @@ angular.module('ngNgrid', [])
             return colName;
         }
 
+        scope.getValueFromProp = function (objValue, propString) {
+            var tempSortProp = null;
+            if (propString != null) {
+                var arrSplitSortProp = propString.split('.');
+                for (var i = 0; i < arrSplitSortProp.length; i++) {
+                    if (i == 0) {
+                        tempSortProp = objValue[arrSplitSortProp[i]];
+                    }
+                    else if (tempSortProp == null) {
+                        break;
+                    }
+                    else {
+                        tempSortProp = tempSortProp[arrSplitSortProp[i]];
+                    }
+                }
+            }
+            return tempSortProp;
+        }
+
+        scope.getChildRows = function (row, childColName) {
+            return scope.getValueFromProp(row, childColName);
+        }
+
+        scope.childRowsCount = function (row) {
+            var childRecCount = 0;
+            for (var i = 0; i < scope.childPropertynames.length; i++) {
+                var tempChildRows = scope.getValueFromProp(row, scope.childPropertynames[i]);
+                childRecCount += tempChildRows ? tempChildRows.length : 0;
+            }            
+            return childRecCount;
+        }
+
         scope.getColValue = function (col, row) {
             var val = null;
             if (row[col.Name] != null) {
                 if (col.SortProperty != null) {
-                    val = row[col.Name][col.SortProperty];
+                    val = scope.getValueFromProp(row[col.Name], col.SortProperty);
                 }
                 else {
                     val = row[col.Name];
@@ -126,8 +158,8 @@ angular.module('ngNgrid', [])
         scope.distinctChildColValues = function (col, row) {
             var distinctValues = [];
             var colName = scope.getSortProperty(col);
-            for (i = 0, len = row[scope.childPropertyname].length ; i < len; i++) {
-                var colValue = scope.getColValue(col, row[scope.childPropertyname][i]);
+            for (i = 0, len = row[scope.childPropertynames].length ; i < len; i++) {
+                var colValue = scope.getColValue(col, row[scope.childPropertynames][i]);
                 if (colValue != null) {
                     if (distinctValues.indexOf(colValue) == -1) {
                         distinctValues.push(colValue);
@@ -154,7 +186,7 @@ angular.module('ngNgrid', [])
         };
         scope.iCounter = 0
         scope.distinctColValuesFiltered = function (col) {
-            logDebug('distinctColValuesFiltered ' + scope.iCounter++);
+            //logDebug('distinctColValuesFiltered ' + scope.iCounter++);
             var colName = scope.getSortProperty(col);
             var filteredList = [];
             var filteredRows = scope.gridFilteredRows;
@@ -358,7 +390,7 @@ angular.module('ngNgrid', [])
         scope: {
             columnDefinitions: '=',
             childColumndefinitions: '=',
-            childPropertyname: '@',
+            childPropertynames: '=',
             rowFooterdefinitions: '=',
             rows: '=',
             rowsLoading: '=',
