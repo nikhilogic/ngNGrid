@@ -133,22 +133,21 @@ All the following column types can be customized using the above common Callback
  
  
 ### Grid HTML binding properties
- rows  -> the array of records to bind to the grid
-                      column-definitions -> array of column definition objects
-                      child-columndefinitions -> array of child column definition objects
-                      child-propertynames  -> array of strings representing the property names of the child rows to bind to the parent row
-                      initial-pagesize  -> number representing the initial number of records to show in one page of the grid
-                      initial-sortcolumn -> string ;name of the column representing  the intial column to sort 
-                      initial-sortdesc -> boolean : whether to sort the initial sort column as descending                      
-                      show-row-numbers -> boolean variable: show row number column by default
-                      show-row-selector -> boolean variable: show row selector column by default
-                      rows-loading -> boolean variable which indicates whether rows are still loading in the grid. This triggers the "loading" animation in the grid
-                      rows-loading-text -> string  which indicates the text to show when records are loading
-					  
-                      grid-height-stretch-bottom-offset-> number indicating the grid should stretch available height on the page except the offset passed
-					  OR
-					  gridHeightFixed -> indicates the grid height is fixed
- 
+
+	rows  -> the array of records to bind to the grid
+	column-definitions -> array of column definition objects
+	child-columndefinitions -> array of child column definition objects
+	child-propertynames  -> array of strings representing the property names of the child rows to bind to the parent row
+	initial-pagesize  -> number representing the initial number of records to show in one page of the grid
+	initial-sortcolumn -> string ;name of the column representing  the intial column to sort 
+	initial-sortdesc -> boolean : whether to sort the initial sort column as descending                      
+	show-row-numbers -> boolean variable: show row number column by default
+	show-row-selector -> boolean variable: show row selector column by default
+	rows-loading -> boolean variable which indicates whether rows are still loading in the grid. This triggers the "loading" animation in the grid
+	rows-loading-text -> string  which indicates the text to show when records are loading					  
+	grid-height-stretch-bottom-offset-> number indicating the grid should stretch available height on the page except the offset passed
+	OR
+	gridHeightFixed -> indicates the grid height is fixed 
  
  
 Dependencies:
