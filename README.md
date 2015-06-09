@@ -117,19 +117,19 @@ Following are the call backs
 The grid supports various types of columns.
 All the following column types can be customized using the above common Callbacks as described above
 
-1. Default : String column Used to display simple text values.      
-   
-2. ngNGridLabel : Used to display label in the grid data for that column.
+	1. Default : String column Used to display simple text values.      
+	   
+	2. ngNGridLabel : Used to display label in the grid data for that column.
 
-3. ngNGridButton : Used to display Button in the grid data for that column.
+	3. ngNGridButton : Used to display Button in the grid data for that column.
 
-4. ngNGridDate : Used to display Date in the grid data for that column.
+	4. ngNGridDate : Used to display Date in the grid data for that column.
 
-5. ngNGridInput : Used to display Input fields in the grid data for that column.
+	5. ngNGridInput : Used to display Input fields in the grid data for that column.
 
-6. ngNGridSelect : Used to display Selectg dropdown in the grid data for that column.
+	6. ngNGridSelect : Used to display Selectg dropdown in the grid data for that column.
 
-7. ngNGridLink : Used to display hyperlink in the grid data for that column.
+	7. ngNGridLink : Used to display hyperlink in the grid data for that column.
  
  
 ### Grid HTML binding properties
