@@ -17,41 +17,41 @@
  var appNgNgrid = angular.module('NgNgridApp', ['ngNgrid']);
  
 * Step 2: Add the ng-ngrid control in your html
- <div ng-app="NgNgridApp">
-        <div ng-controller="HomeController">
-          
-            <ng-ngrid rows="data"
-                      column-definitions="columnDefs"
-                      child-columndefinitions="[childColumndef1,childColumndef2]"
-                      child-propertynames="['Children1','Children2']"
-                      initial-pagesize="20"
-                      initial-sortcolumn="aSortcolumn"
-                      initial-sortdesc="aSortdesc"
-                      bottom-elementids="gridbottomids"
-                      show-row-numbers="true"
-                      show-row-selector="true"
-                      rows-loading="loadingRecords"
-                      rows-loading-text="Loading records have patience"
-                      grid-height-stretch-bottom-offset="0"
-					  >
-            </ng-ngrid>
+	 <div ng-app="NgNgridApp">
+			<div ng-controller="HomeController">
+			  
+				<ng-ngrid rows="data"
+						  column-definitions="columnDefs"
+						  child-columndefinitions="[childColumndef1,childColumndef2]"
+						  child-propertynames="['Children1','Children2']"
+						  initial-pagesize="20"
+						  initial-sortcolumn="aSortcolumn"
+						  initial-sortdesc="aSortdesc"
+						  bottom-elementids="gridbottomids"
+						  show-row-numbers="true"
+						  show-row-selector="true"
+						  rows-loading="loadingRecords"
+						  rows-loading-text="Loading records have patience"
+						  grid-height-stretch-bottom-offset="0"
+						  >
+				</ng-ngrid>
 
-        </div>
-    </div>
+			</div>
+		</div>
  
 * Step 3: Add column definitions in your controller. Column definition properties will be explained in detail later
 
- $scope.columnDefs = [
-               {
-                   Name: 'Col1String',
-                   DisplayName: 'String(Default Type) Column',
-                   GlyphFn: function (r) { return 'glyphicon-king'; },
-                   BadgeFn: function (r) { return r[this.Name].length; },
-                   ClassFn: function (r) { return 'text-primary'; }
-               }];
+	 $scope.columnDefs = [
+				   {
+					   Name: 'Col1String',
+					   DisplayName: 'String(Default Type) Column',
+					   GlyphFn: function (r) { return 'glyphicon-king'; },
+					   BadgeFn: function (r) { return r[this.Name].length; },
+					   ClassFn: function (r) { return 'text-primary'; }
+				   }];
 			   
 * Step 4: Populate rows in your controller
- $scope.data.push({Col1String: 'String data'});
+	$scope.data.push({Col1String: 'String data'});
  
  
 ## Reference:
