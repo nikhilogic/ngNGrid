@@ -14,9 +14,11 @@
 ## How to use:
  
 * Step 1: Add dependency in your controller
+```javascript
 	 var appNgNgrid = angular.module('NgNgridApp', ['ngNgrid']);
  
 * Step 2: Add the ng-ngrid control in your html	
+```html
 	 <div ng-app="NgNgridApp">
 			<div ng-controller="HomeController">
 			  
@@ -40,6 +42,7 @@
 		</div>
  
 * Step 3: Add column definitions in your controller. Column definition properties will be explained in detail later
+```javascript
 	 $scope.columnDefs = [
 			   {
 				   Name: 'Col1String',
@@ -50,6 +53,7 @@
 			   }];
 			   
 * Step 4: Populate rows in your controller
+```javascript
 	 $scope.data.push({Col1String: 'String data'});
  
  
