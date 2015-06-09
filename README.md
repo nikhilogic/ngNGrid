@@ -40,15 +40,14 @@
 		</div>
  
 * Step 3: Add column definitions in your controller. Column definition properties will be explained in detail later
-
-	 $scope.columnDefs = [
-				   {
-					   Name: 'Col1String',
-					   DisplayName: 'String(Default Type) Column',
-					   GlyphFn: function (r) { return 'glyphicon-king'; },
-					   BadgeFn: function (r) { return r[this.Name].length; },
-					   ClassFn: function (r) { return 'text-primary'; }
-				   }];
+	$scope.columnDefs = [
+			   {
+				   Name: 'Col1String',
+				   DisplayName: 'String(Default Type) Column',
+				   GlyphFn: function (r) { return 'glyphicon-king'; },
+				   BadgeFn: function (r) { return r[this.Name].length; },
+				   ClassFn: function (r) { return 'text-primary'; }
+			   }];
 			   
 * Step 4: Populate rows in your controller
 	$scope.data.push({Col1String: 'String data'});
