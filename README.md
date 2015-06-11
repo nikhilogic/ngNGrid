@@ -9,7 +9,7 @@
  - Allows custom message while Loading
  - Allows animation when records are updated
  - Delegate (event based) column templates to handle action on data
- 
+ - Support for range filters for date and numeric columns
 
 ## How to use:
  
