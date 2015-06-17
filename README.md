@@ -4,10 +4,11 @@
 
 ## This is an extensible and customizable grid control built in angular js.
 
-### Demo: See the demo [here](https://nikhilogic.github.io/)
+### Demo: 
+See the demo [here](https://nikhilogic.github.io/)
 
 ### Download :
-    Download using the "Download ZIP" button on the right panel. This contains minified .js and .css file.
+Download using the "Download ZIP" button on the right panel. This contains minified .js and .css file.
 
 ### Salient Features:
  - Allows to create different types of column data (button, label, custom format...)
