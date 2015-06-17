@@ -1,6 +1,13 @@
 # ngNGrid
+ * Version: 1.0
+ * License: MIT
 
 ## This is an extensible and customizable grid control built in angular js.
+
+### Demo: See the demo [here](https://nikhilogic.github.io/)
+
+### Download :
+    Download using the "Download ZIP" button on the right panel. This contains minified .js and .css file.
 
 ### Salient Features:
  - Allows to create different types of column data (button, label, custom format...)
@@ -125,13 +132,16 @@ All the following column types can be customized using the above common Callback
 
 	3. ngNGridButton : Used to display Button in the grid data for that column.
 
-	4. ngNGridDate : Used to display Date in the grid data for that column.
+	4. ngNGridDate : Used to display Date in the grid data for that column. Comes with ranged search filter.
 
 	5. ngNGridInput : Used to display Input fields in the grid data for that column.
 
 	6. ngNGridSelect : Used to display Selectg dropdown in the grid data for that column.
 
 	7. ngNGridLink : Used to display hyperlink in the grid data for that column.
+	
+	8. ngNGridNumber : Used to display number columsn. Comes with ranged search filter.
+	
  
  
 ### Grid HTML binding properties
