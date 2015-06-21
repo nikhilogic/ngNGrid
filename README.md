@@ -4,7 +4,7 @@
 
 ## This is an extensible and customizable grid control built in angular js.
 
-## Interactive Demo/Designer: 
+### Interactive Demo/Designer: 
 You can customize and play around with the grid here [here](https://nikhilogic.github.io/)
 
 ### Download :
