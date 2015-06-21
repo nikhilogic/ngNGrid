@@ -4,8 +4,8 @@
 
 ## This is an extensible and customizable grid control built in angular js.
 
-### Demo: 
-See the demo [here](https://nikhilogic.github.io/)
+## Interactive Demo/Designer: 
+You can customize and play around with the grid here [here](https://nikhilogic.github.io/)
 
 ### Download :
 Download using the "Download ZIP" button on the right panel. This contains minified .js and .css file.
@@ -21,11 +21,13 @@ Download using the "Download ZIP" button on the right panel. This contains minif
 
 ## How to use:
  
-* Step 1: Add dependency in your controller
+* Step 1: Checkout the interactive grid designer here to see how you need to style your columns here [here](https://nikhilogic.github.io/) 
+ 
+* Step 2: Add dependency in your controller
 ```javascript
 	 var appNgNgrid = angular.module('NgNgridApp', ['ngNgrid']);
  ```
-* Step 2: Add the ng-ngrid control in your html	
+* Step 3: Add the ng-ngrid control in your html	
 ```html
 	 <div ng-app="NgNgridApp">
 			<div ng-controller="HomeController">
@@ -48,7 +50,7 @@ Download using the "Download ZIP" button on the right panel. This contains minif
 			</div>
 		</div>
  ```
-* Step 3: Add column definitions in your controller. Column definition properties will be explained in detail later
+* Step 4: Add column definitions in your controller. Column definition properties will be explained in detail later
 ```javascript
 	 $scope.columnDefs = [
 			   {
@@ -59,7 +61,7 @@ Download using the "Download ZIP" button on the right panel. This contains minif
 				   ClassFn: function (r) { return 'text-primary'; }
 			   }];
 ```			   
-* Step 4: Populate rows in your controller
+* Step 5: Populate rows in your controller
 ```javascript
 	 $scope.data.push({Col1String: 'String data'});
 ```
