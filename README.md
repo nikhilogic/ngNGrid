@@ -19,7 +19,7 @@ Download using the "Download ZIP" button on the right panel. This contains minif
  - Allows animation when records are updated
  - Delegate (event based) column templates to handle action on data
  - Support for range filters for date and numeric columns
- - Import and exports rows in Json format which can be overrident for custom handling.
+ - Import and exports rows in Json format which can be overriden for custom handling.
 
 ## How to use:
  
@@ -67,11 +67,11 @@ Design the grid on the fly and download the column definition code.
 	1. Name:  This is the property of the dataset which needs to be bound to the column. The property can be object or a simple value.
 	2. DisplayName:  This is the name to be shown in the column header of the grid	
 	3. DisableFilter:  (Default is false) When set to true disables the filtering capability for that column
-	4. ColumnType: THis can be any of the colum types described below in the "Column Types" section.
+	4. ColumnType: This can be any of the column types described below in the "Column Types" section.
 
 ### Common Functions (Callbacks)
-The Grid column peroperties have many callback functions which allow you to override style, glyphicons, text , badge , null value substitution etc for the data in that column.
-Most of the call backs give you the row object which can be queried , incase the value you want to assing to the data is a derived from other column data in that row.
+The Grid column properties have many callback functions which allow you to override style, glyphicons, text , badge , null value substitution etc for the data in that column.
+Most of the call backs give you the row object which can be queried , incase the value you want to assign to the data is a derived from other column data in that row.
 Following are the call backs
 
 
@@ -133,11 +133,11 @@ All the following column types can be customized using the above common Callback
 
 	5. ngNGridInput : Used to display Input fields in the grid data for that column.
 
-	6. ngNGridSelect : Used to display Selectg dropdown in the grid data for that column.
+	6. ngNGridSelect : Used to display Select dropdown in the grid data for that column.
 
 	7. ngNGridLink : Used to display hyperlink in the grid data for that column.
 	
-	8. ngNGridNumber : Used to display number columsn. Comes with ranged search filter.
+	8. ngNGridNumber : Used to display number columns. Comes with ranged search filter.
 	
  
  
@@ -150,7 +150,7 @@ All the following column types can be customized using the above common Callback
 	rows-loading -> boolean variable which indicates whether rows are still loading in the grid. This triggers the "loading" animation in the grid
 	rows-loading-text -> string  which indicates the text to show when records are loading					  	
 	initial-pagesize (optional: default 15)  -> number representing the initial number of records to show in one page of the grid
-	initial-sortcolumn (optional: default:none) -> string ;name of the column representing  the intial column to sort 
+	initial-sortcolumn (optional: default:none) -> string ;name of the column representing  the initial column to sort 
 	initial-sortdesc (optional default:none) -> boolean : whether to sort the initial sort column as descending                      
 	show-row-numbers (optional: default:false) -> boolean variable: show row number column by default
 	show-row-selector (optional: default:false) -> boolean variable: show row selector column by default	
@@ -160,9 +160,9 @@ All the following column types can be customized using the above common Callback
 	notifyGridFiltersChanged -> call back function to assign when Grid filters are changed.
 			Parameters passed : ( filterColumnName: column name to which filter is applied or removed (this is empty for when all grid filters are removed) , filters: filters added/removed for the column, isAdded: indicates if filter is added or removed )
 	onDataImport -> callback function to assign when import action starts. Here you can override or cancel the event.
-			Paremeter passed : ngNgridImportObject (contains two properties :   Rows: rows which are parsed for import , CancelEvent: boolean indicating whether to cancel the import
+			Parameter passed : ngNgridImportObject (contains two properties :   Rows: rows which are parsed for import , CancelEvent: boolean indicating whether to cancel the import
 	onDataExport -> callback function to assign when export action starts. Here you can override or cancel the event.
-			Paremeter passed : ngNgridExportObject (contains two properties :   Rows: rows which are parsed for import , CancelEvent: boolean indicating whether to cancel the import
+			Parameter passed : ngNgridExportObject (contains two properties :   Rows: rows which are parsed for import , CancelEvent: boolean indicating whether to cancel the import
 	addColumnFilters (optional: default:none) -> function to call when adding filters to grid from hosting control.
 			Parameters to be passed : (column name, array of filter strings to be applied for the column)
 	showSettings (optional: default:false) -> Indicates whether the settings menu is expanded initially by default
