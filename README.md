@@ -1,5 +1,5 @@
 # ngNGrid
- * Version: 1.0
+ * Version: 1.2
  * License: MIT
 
 ## This is an extensible and customizable grid control built in angular js.
