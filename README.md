@@ -5,7 +5,7 @@
 ## This is an extensible and customizable grid control built in angular js.
 
 ### Interactive Demo/Designer: 
-You can customize and play around with the grid here [here](https://nikhilogic.github.io/)
+You can customize and play around with the grid [here](https://nikhilogic.github.io/)
 In this demo, you can design the grid on the fly and download the column initialization code.
 
 ### Download :
@@ -23,7 +23,7 @@ Download using the "Download ZIP" button on the right panel. This contains minif
 
 ## How to use:
  
-* Step 1: Checkout the interactive grid designer here to see how you need to style your columns here [here](https://nikhilogic.github.io/) 
+* Step 1: Checkout the interactive grid designer [here](https://nikhilogic.github.io/) to see how you need to style your columns 
 Design the grid on the fly and download the column definition code.
  
 * Step 2: Add dependency in your controller
